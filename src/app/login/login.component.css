@@ -1,22 +1,38 @@
+.login-form {
+  max-width: 300px;
+}
 
-      .login-form {
-        max-width: 300px;
-      }
+.login-form-forgot {
+  float: right;
+}
 
-      .login-form-forgot {
-        float: right;
-      }
+.login-form-button {
+  width: 100%;
+}
 
-      .login-form-button {
-        width: 100%;
-      }
+.login-form-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 
-      .login-form-container{
-        width: 100vw;
-        height: 100vh;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-      }
-    
+.fondo {
+
+  /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#143964+12,237fc5+100&1+1,0+100 */
+  background: -moz-linear-gradient(top, rgba(20, 57, 100, 1) 1%, rgba(20, 57, 100, 0.89) 12%, rgba(35, 127, 197, 0) 100%);
+  /* FF3.6-15 */
+  background: -webkit-linear-gradient(top, rgba(20, 57, 100, 1) 1%, rgba(20, 57, 100, 0.89) 12%, rgba(35, 127, 197, 0) 100%);
+  /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom, rgba(20, 57, 100, 1) 1%, rgba(20, 57, 100, 0.89) 12%, rgba(35, 127, 197, 0) 100%);
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#143964', endColorstr='#00237fc5', GradientType=0);
+  /* IE6-9 */
+}
+
+.texto {
+  font-size: medium;
+  color: black;
+}

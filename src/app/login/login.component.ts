@@ -29,6 +29,8 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  
+
   login() {
     this.route.navigate(['/proyecto']);
   }
