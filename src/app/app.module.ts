@@ -15,7 +15,6 @@ import { LoginComponent } from './login/login.component';
 import { WelcomeComponent } from './pages/welcome/welcome.component';
 import { RegistroComponent } from './pages/registro/registro.component';
 
-
 registerLocaleData(en);
 
 @NgModule({
@@ -30,6 +29,7 @@ registerLocaleData(en);
     AppRoutingModule,
     IconsProviderModule,
     NgZorroAntdModule,
+    BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,

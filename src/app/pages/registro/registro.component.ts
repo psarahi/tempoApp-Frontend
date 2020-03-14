@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Cuenta } from '../../Modelos/cuenta';
-
+import { CuentaModel, Cuenta } from '../../Modelos/cuenta';
+import { CuentaService } from '../../Servicios/cuenta.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-registro',
@@ -11,7 +12,7 @@ import { Cuenta } from '../../Modelos/cuenta';
 export class RegistroComponent implements OnInit {
 
   validateForm: FormGroup;
-  dataCuenta: Cuenta;
+  dataCuenta;
 
   submitForm(): void {
     // tslint:disable-next-line: forin
@@ -20,11 +21,24 @@ export class RegistroComponent implements OnInit {
       this.validateForm.controls[i].updateValueAndValidity();
     }
 
-    console.log(this.validateForm.value);
+    // debugger;
+    this.dataCuenta = {
+      ...this.validateForm.value,
+      fechaRegistro: moment().format('YYYY-MM-DD'),
+      perfil: 'admin',
+      estado: true
+    };
 
-    
+    console.log(this.dataCuenta);
+
+    this.serviceCuenta.postCuenta(this.dataCuenta).subscribe(
+      (data) => {
+        console.log(data);
+
+      }
+    );
+
   }
-
 
   confirmationValidator = (control: FormControl): { [s: string]: boolean } => {
     if (!control.value) {
@@ -39,7 +53,10 @@ export class RegistroComponent implements OnInit {
     e.preventDefault();
   }
 
-  constructor(private fb: FormBuilder) { }
+  constructor(
+    private fb: FormBuilder,
+    private serviceCuenta: CuentaService
+  ) { }
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({
@@ -47,7 +64,7 @@ export class RegistroComponent implements OnInit {
       apellido: [null, [Validators.required]],
       usuario: [null, [Validators.required]],
       correo: [null, [Validators.email, Validators.required]],
-      contraseña: [null, [Validators.required]],
+      password: [null, [Validators.required]],
       empresa: [null, [Validators.required]],
       lugar: [null, [Validators.required]]
     });

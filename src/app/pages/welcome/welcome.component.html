@@ -8,6 +8,13 @@
       </a>
     </div>
     <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
+      <li nz-submenu nzOpen nzTitle="Administración" nzIcon="tool">
+        <ul>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/cuentas">Cuentas</a>
+          </li>
+        </ul>
+      </li>
       <li nz-submenu nzOpen nzTitle="Mantenimiento" nzIcon="tool">
         <ul>
           <li nz-menu-item nzMatchRouter>
@@ -18,9 +25,6 @@
           </li>
         </ul>
       </li>
-
-
-
       <li nz-submenu nzOpen nzTitle="Reportes" nzIcon="line-chart">
         <ul>
           <li nz-menu-item nzMatchRouter>
