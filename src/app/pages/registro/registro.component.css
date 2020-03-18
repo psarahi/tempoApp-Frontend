@@ -2,10 +2,6 @@
   max-width: 800px;
 }
 
-.phone-select {
-  width: 70px;
-}
-
 .register-are {
   margin-bottom: 8px;
 }
@@ -17,5 +13,9 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+  }
+  
+  i {
+    cursor: pointer;
   }
   

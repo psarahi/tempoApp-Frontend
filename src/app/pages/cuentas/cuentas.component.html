@@ -1,41 +1,35 @@
-<nz-table #nzTable [nzData]="listOfDisplayData">
-  <thead>
-    <tr>
-      <th nzCustomFilter>
-        Name
-        <i
-          nz-th-extra
-          class="ant-table-filter-icon"
-          nz-icon
-          nz-dropdown
-          #dropdown="nzDropdown"
-          nzType="search"
-          [nzDropdownMenu]="menu"
-          [class.ant-table-filter-open]="dropdown.nzVisible"
-          nzTrigger="click"
-          nzPlacement="bottomRight"
-          [nzClickHide]="false"
-          nzTableFilter
-        ></i>
-      </th>
-      <th>Age</th>
-      <th nzShowFilter [nzFilters]="listOfFilterAddress" (nzFilterChange)="filterAddressChange($event)">Address</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let data of nzTable.data">
-      <td>{{ data.name }}</td>
-      <td>{{ data.age }}</td>
-      <td>{{ data.address }}</td>
-    </tr>
-  </tbody>
-</nz-table>
-<nz-dropdown-menu #menu="nzDropdownMenu">
-  <div class="search-box">
-    <input type="text" nz-input placeholder="Search name" [(ngModel)]="searchValue" />
-    <button nz-button nzSize="small" nzType="primary" (click)="search()" class="search-button">
-      Search
-    </button>
-    <button nz-button nzSize="small" (click)="reset()">Reset</button>
+<div>
+  <h2 class="title">Cuentas registradas</h2>
+  <div class="tabla">
+
+    <button nz-button nzType="primary"><i nz-icon nzType="plus"></i>Agregar cuenta</button>
+    <nz-table #nzTable [nzData]="listOfDisplayData">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>Correo</th>
+          <th>Usuario</th>
+          <th>Password</th>
+          <th>Empresa</th>
+          <th>Lugar</th>
+          <th>Fecha Registro</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of nzTable.data">
+          <td> {{ data.nombre }} </td>
+          <td> {{ data.apellido }} </td>
+          <td> {{ data.correo }} </td>
+          <td> {{ data.usuario }} </td>
+          <td> {{ data.password }} </td>
+          <td> {{ data.empresa }} </td>
+          <td> {{ data.lugar }} </td>
+          <td> {{ data.fechaRegistro }} </td>
+          <td> {{ data.estado && 'Activo' || 'Inactivo' }} </td>
+        </tr>
+      </tbody>
+    </nz-table>
   </div>
-</nz-dropdown-menu>
+</div>

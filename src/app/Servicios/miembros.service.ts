@@ -7,15 +7,15 @@ const apiUrl = environment.apiUrl;
 @Injectable({
   providedIn: 'root'
 })
-export class CuentaService {
+export class MiembrosService {
 
   constructor(private http: HttpClient) { }
 
-  postCuenta(cuenta) {
-    return this.http.post(`${apiUrl}/cuentas`, cuenta);
+  getMiembros() {
+    return this.http.get(`${apiUrl}/miembros`);
   }
 
-  getCuenta() {
-    return this.http.get(`${apiUrl}/cuentas`);
+  postMiembros(miembro) {
+    return this.http.post(`${apiUrl}/miembros`, miembro);
   }
 }

@@ -13,6 +13,8 @@ export class RegistroComponent implements OnInit {
 
   validateForm: FormGroup;
   dataCuenta;
+  passwordVisible = false;
+  password: string;
 
   submitForm(): void {
     // tslint:disable-next-line: forin
@@ -29,12 +31,8 @@ export class RegistroComponent implements OnInit {
       estado: true
     };
 
-    console.log(this.dataCuenta);
-
     this.serviceCuenta.postCuenta(this.dataCuenta).subscribe(
       (data) => {
-        console.log(data);
-
       }
     );
 

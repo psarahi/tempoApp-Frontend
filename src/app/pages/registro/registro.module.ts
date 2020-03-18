@@ -3,6 +3,8 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/cor
 import { CommonModule } from '@angular/common';
 import { RegistroComponent } from './registro.component';
 import { NzFormModule } from 'ng-zorro-antd/form';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 // import { FlexLayoutModule } from '@angular/flex-layout';
 
 const routes: Routes = [
@@ -13,8 +15,9 @@ const routes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
-    // FlexLayoutModule,
-    NzFormModule
+    NzInputModule,
+    NzFormModule,
+    NzIconModule
   ],
   declarations: [RegistroComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
