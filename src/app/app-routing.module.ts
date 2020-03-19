@@ -17,6 +17,8 @@ const routes: Routes = [
       { path: 'report', loadChildren: () => import('./pages/report/report.module').then(m => m.ReportModule) },
       { path: 'equipo', loadChildren: () => import('./pages/equipo/equipo.module').then(m => m.EquipoModule) },
       { path: 'cuentas', loadChildren: () => import('./pages/cuentas/cuentas.module').then(m => m.CuentasModule) },
+      { path: 'actividades', loadChildren: () => import('./pages/actividades/actividades.module').then(m => m.ActividadesModule) },
+      
       // { path: 'registro', loadChildren: () => import('./pages/registro/registro.module').then(m => m.RegistroModule) }
     ]
   }

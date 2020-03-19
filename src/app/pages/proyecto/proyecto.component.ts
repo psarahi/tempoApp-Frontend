@@ -4,6 +4,7 @@ import { ProyectoModel } from 'src/app/Modelos/proyecto';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MiembrosModel } from '../../Modelos/miembros';
 import { MiembrosService } from '../../Servicios/miembros.service';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-proyecto',
@@ -14,6 +15,7 @@ export class ProyectoComponent implements OnInit {
 
   validateForm: FormGroup;
   visible = false;
+  loadingTable = true;
   listaProtectos: ProyectoModel[];
   listOfDisplayData: ProyectoModel[];
   dataProyectos;
@@ -21,15 +23,21 @@ export class ProyectoComponent implements OnInit {
   constructor(
     private serviceProyecto: ProyectosService,
     private fb: FormBuilder,
-    private serviceMiembros: MiembrosService
+    private serviceMiembros: MiembrosService,
+    private message: NzMessageService
+
   ) { }
+
+  createMessage(type: string, mensaje: string): void {
+    this.message.create(type, mensaje);
+  }
 
   ngOnInit(): void {
 
     this.serviceMiembros.getMiembros().toPromise().then(
       (data: MiembrosModel[]) => {
         this.dataMiembros = data;
-       // console.log(this.dataMiembros);
+        // console.log(this.dataMiembros);
 
       }
     );
@@ -38,6 +46,7 @@ export class ProyectoComponent implements OnInit {
       (data: ProyectoModel[]) => {
         this.listaProtectos = data;
         this.listOfDisplayData = [...this.listaProtectos];
+        this.loadingTable = false;
       }
     );
     this.validateForm = this.fb.group({
@@ -65,7 +74,14 @@ export class ProyectoComponent implements OnInit {
         // console.log(this.listaProtectos);
 
         this.listOfDisplayData.push({ ...data });
-        console.log(this.listOfDisplayData);
+        // console.log(this.listOfDisplayData);
+        this.loadingTable = false;
+        this.createMessage('success', 'Registro creado con exito');
+      },
+      (error) => {
+        console.log(error);
+
+        this.createMessage('error', 'Opps!!! Algo salio mal');
       }
     );
     this.visible = false;

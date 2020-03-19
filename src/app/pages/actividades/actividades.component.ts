@@ -1,28 +1,28 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { CuentaModel, Cuenta } from '../../Modelos/cuenta';
-import { CuentaService } from '../../Servicios/cuenta.service';
-import * as moment from 'moment';
+import { ActividadesModel } from '../../Modelos/actividades';
+import { ActividadesService } from '../../Servicios/actividades.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
+
 @Component({
-  selector: 'app-cuentas',
-  templateUrl: './cuentas.component.html',
-  styleUrls: ['./cuentas.component.css']
+  selector: 'app-actividades',
+  templateUrl: './actividades.component.html',
+  styleUrls: ['./actividades.component.css']
 })
-export class CuentasComponent implements OnInit {
+export class ActividadesComponent implements OnInit {
 
   validateForm: FormGroup;
-  dataCuenta;
+  dataActividades;
   loadingTable = true;
   visible = false;
   passwordVisible = false;
-  listaCuentas: CuentaModel[];
-  listOfDisplayData: CuentaModel[];
+  listaActividades: ActividadesModel[];
+  listOfDisplayData: ActividadesModel[];
 
   constructor(
     private fb: FormBuilder,
-    private serviceCuenta: CuentaService,
+    private serviceActivades: ActividadesService,
     private message: NzMessageService
   ) { }
 
@@ -38,14 +38,13 @@ export class CuentasComponent implements OnInit {
     }
 
     // debugger;
-    this.dataCuenta = {
+    this.dataActividades = {
       ...this.validateForm.value,
-      fechaRegistro: moment().format('YYYY-MM-DD'),
-      perfil: 'admin',
+      idCuenta: 'actual'
     };
 
-    this.serviceCuenta.postCuenta(this.dataCuenta).subscribe(
-      (data: CuentaModel) => {
+    this.serviceActivades.postActividades(this.dataActividades).subscribe(
+      (data: ActividadesModel) => {
         this.listOfDisplayData.push({ ...data });
         this.loadingTable = false;
 
@@ -59,30 +58,21 @@ export class CuentasComponent implements OnInit {
     );
 
   }
+
   ngOnInit() {
-    // debugger;
-    this.serviceCuenta.getCuenta().toPromise().then(
-      (data: CuentaModel[]) => {
-        this.listaCuentas = data;
-        this.listaCuentas.forEach(element => {
-          element.fechaRegistro = moment(element.fechaRegistro).format('YYYY-MM-DD')
-        });
-        this.listOfDisplayData = [...this.listaCuentas];
+    this.serviceActivades.getActividades().toPromise().then(
+      (data: ActividadesModel[]) => {
+        this.listaActividades = data;
+
+        this.listOfDisplayData = [...this.listaActividades];
         this.loadingTable = false;
       }
     );
 
     this.validateForm = this.fb.group({
       nombre: [null, [Validators.required]],
-      apellido: [null, [Validators.required]],
-      usuario: [null, [Validators.required]],
-      correo: [null, [Validators.email, Validators.required]],
-      password: [null, [Validators.required]],
-      empresa: [null, [Validators.required]],
-      lugar: [null, [Validators.required]],
       estado: [null, [Validators.required]],
     });
-
   }
 
   open(): void {
@@ -92,4 +82,5 @@ export class CuentasComponent implements OnInit {
   close(): void {
     this.visible = false;
   }
+
 }

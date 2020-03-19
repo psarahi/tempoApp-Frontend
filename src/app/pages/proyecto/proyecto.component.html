@@ -1,9 +1,9 @@
 <div class="tabla">
-  <h2>Proyectos</h2>
+  <h2>Proyectos registrados</h2>
   <div>
 
     <button nz-button nzType="primary" (click)="open()"><i nz-icon nzType="plus"></i>Agregar Proyecto</button>
-    <nz-table #nzTable [nzData]="listOfDisplayData" nzFrontPagination="true" nzPageSize="5">
+    <nz-table #nzTable [nzData]="listOfDisplayData" nzFrontPagination="true" nzPageSize="5" [nzLoading]="loadingTable">
       <thead>
         <tr>
           <th>Nombre</th>
@@ -31,7 +31,7 @@
 </div>
 
 <nz-drawer [nzBodyStyle]="{ height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom': '53px' }"
-  [nzMaskClosable]="false" [nzWidth]="650" [nzVisible]="visible" nzTitle="Create" (nzOnClose)="close()">
+  [nzMaskClosable]="false" [nzWidth]="650" [nzVisible]="visible" nzTitle="Configuración de proyectos" (nzOnClose)="close()">
   <form nz-form [nzLayout]="'vertical'" [formGroup]="validateForm" (ngSubmit)="submitForm()">
     <nz-form-item>
       <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired nzFor="nombreProyecto">Nombre</nz-form-label>

@@ -5,6 +5,8 @@ import { RegistroComponent } from './registro.component';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzMessageModule } from 'ng-zorro-antd/message';
+
 // import { FlexLayoutModule } from '@angular/flex-layout';
 
 const routes: Routes = [
@@ -17,7 +19,8 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     NzInputModule,
     NzFormModule,
-    NzIconModule
+    NzIconModule,
+    NzMessageModule
   ],
   declarations: [RegistroComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]

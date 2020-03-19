@@ -1,41 +1,40 @@
-<div>
-  <h2 class="title">Miembros</h2>
-  <div class="tabla">
+<div class="tabla">
+  <h2>Miembros de su equipo</h2>
 
-    <button nz-button nzType="primary" (click)="open()"><i nz-icon nzType="plus"></i>Agregar Miembro</button>
-    <nz-table #nzTable [nzData]="listOfDisplayData" nzFrontPagination="true" nzPageSize="5">
-      <thead>
-        <tr>
-          <th>Nombre</th>
-          <th>Apellido</th>
-          <th>Usuario</th>
-          <th>Password</th>
-          <th>Correo</th>
-          <th>Costo Hr</th>
-          <th>Perfil</th>
-          <th>Espertis</th>
-          <th>Estado</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let data of nzTable.data">
-          <td> {{ data.nombre }} </td>
-          <td> {{ data.apellido }} </td>
-          <td> {{ data.usuario }} </td>
-          <td> {{ data.password }} </td>
-          <td> {{ data.correo }} </td>
-          <td> {{ data.costoHr }} </td>
-          <td> {{ data.perfil }} </td>
-          <td> {{ data.expertis }} </td>
-          <td> {{ data.estado && 'Activo' || 'Inactivo' }} </td>
-        </tr>
-      </tbody>
-    </nz-table>
-  </div>
+  <button nz-button nzType="primary" (click)="open()"><i nz-icon nzType="plus"></i>Agregar Miembro</button>
+  <nz-table #nzTable [nzData]="listOfDisplayData" nzFrontPagination="true" nzPageSize="5" [nzLoading]="loadingTable">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Usuario</th>
+        <th>Password</th>
+        <th>Correo</th>
+        <th>Costo Hr</th>
+        <th>Perfil</th>
+        <th>Espertis</th>
+        <th>Estado</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of nzTable.data">
+        <td> {{ data.nombre }} </td>
+        <td> {{ data.apellido }} </td>
+        <td> {{ data.usuario }} </td>
+        <td> {{ data.password }} </td>
+        <td> {{ data.correo }} </td>
+        <td> {{ data.costoHr }} </td>
+        <td> {{ data.perfil }} </td>
+        <td> {{ data.expertis }} </td>
+        <td> {{ data.estado && 'Activo' || 'Inactivo' }} </td>
+      </tr>
+    </tbody>
+  </nz-table>
 </div>
 
 <nz-drawer [nzBodyStyle]="{ height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom': '53px' }"
-  [nzMaskClosable]="false" [nzWidth]="650" [nzVisible]="visible" nzTitle="Create" (nzOnClose)="close()">
+  [nzMaskClosable]="false" [nzWidth]="650" [nzVisible]="visible" nzTitle="Configuración de miembros"
+  (nzOnClose)="close()">
   <form nz-form [nzLayout]="'vertical'" [formGroup]="validateForm" (ngSubmit)="submitForm()">
     <nz-form-item>
       <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired nzFor="nombre">Nombre</nz-form-label>
@@ -59,7 +58,7 @@
       <nz-form-label [nzSm]="8" nzHasFeedback [nzXs]="24" nzFor="password" nzRequired>Contraseña</nz-form-label>
       <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="El dato es incorrecto!">
         <nz-input-group [nzSuffix]="suffixTemplate">
-          <input [type]="passwordVisible ? 'text' : 'password'" nz-input placeholder="input password" nz-input
+          <input [type]="passwordVisible ? 'text' : 'password'" nz-input nz-input
             id="password" formControlName="password" />
         </nz-input-group>
         <ng-template #suffixTemplate>

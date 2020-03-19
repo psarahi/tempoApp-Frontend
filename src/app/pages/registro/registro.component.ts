@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { CuentaModel, Cuenta } from '../../Modelos/cuenta';
 import { CuentaService } from '../../Servicios/cuenta.service';
 import * as moment from 'moment';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-registro',
@@ -33,28 +34,27 @@ export class RegistroComponent implements OnInit {
 
     this.serviceCuenta.postCuenta(this.dataCuenta).subscribe(
       (data) => {
+        this.createMessage('success', 'Registro creado con exito');
+      },
+      (error) => {
+        console.log(error);
+
+        this.createMessage('error', 'Opps!!! Algo salio mal');
       }
     );
 
   }
 
-  confirmationValidator = (control: FormControl): { [s: string]: boolean } => {
-    if (!control.value) {
-      return { required: true };
-    } else if (control.value !== this.validateForm.controls.password.value) {
-      return { confirm: true, error: true };
-    }
-    return {};
-  };
-
-  getCaptcha(e: MouseEvent): void {
-    e.preventDefault();
-  }
-
   constructor(
     private fb: FormBuilder,
-    private serviceCuenta: CuentaService
+    private serviceCuenta: CuentaService,
+    private message: NzMessageService
+
   ) { }
+
+  createMessage(type: string, mensaje: string): void {
+    this.message.create(type, mensaje);
+  }
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MiembrosModel } from 'src/app/Modelos/miembros';
 import { MiembrosService } from '../../Servicios/miembros.service';
+import { NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
   selector: 'app-equipo',
@@ -12,6 +13,7 @@ export class EquipoComponent implements OnInit {
 
   validateForm: FormGroup;
   passwordVisible = false;
+  loadingTable = true;
   visible = false;
   listaMiembros: MiembrosModel[];
   listOfDisplayData: MiembrosModel[];
@@ -51,8 +53,14 @@ export class EquipoComponent implements OnInit {
 
   constructor(
     private serviceMiembro: MiembrosService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private message: NzMessageService
+
   ) { }
+
+  createMessage(type: string, mensaje: string): void {
+    this.message.create(type, mensaje);
+  }
 
   ngOnInit() {
     // this.addField();
@@ -60,6 +68,13 @@ export class EquipoComponent implements OnInit {
       (data: MiembrosModel[]) => {
         this.listaMiembros = data;
         this.listOfDisplayData = [...this.listaMiembros];
+        this.loadingTable = false;
+        // this.createMessage('success', 'Registro creado con exito');
+      },
+      (error) => {
+        console.log(error);
+
+        this.createMessage('error', 'Opps!!! Algo salio mal');
       }
     );
 
@@ -86,10 +101,16 @@ export class EquipoComponent implements OnInit {
 
     this.serviceMiembro.postMiembros(this.dataMiembros).toPromise().then(
       (data: MiembrosModel) => {
-         console.log(data);
+        //  console.log(data);
         this.listOfDisplayData.push({ ...data });
-        console.log(this.listOfDisplayData);
+        // console.log(this.listOfDisplayData);
+        this.loadingTable = false;
+        this.createMessage('success', 'Registro creado con exito');
+      },
+      (error) => {
+        console.log(error);
 
+        this.createMessage('error', 'Opps!!! Algo salio mal');
       }
     );
 

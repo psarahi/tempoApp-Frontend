@@ -1,6 +1,6 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { EquipoComponent } from './equipo.component';
+import { ActividadesComponent } from './actividades.component';
 import { Routes, RouterModule } from '@angular/router';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
@@ -19,7 +19,7 @@ import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 
 const routes: Routes = [
-  { path: '', component: EquipoComponent }
+  { path: '', component: ActividadesComponent }
 ];
 
 @NgModule({
@@ -42,9 +42,9 @@ const routes: Routes = [
     ReactiveFormsModule,
     NzSwitchModule,
     NzMessageModule
-
   ],
-  declarations: [EquipoComponent],
+  declarations: [ActividadesComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
+
 })
-export class EquipoModule { }
+export class ActividadesModule { }
