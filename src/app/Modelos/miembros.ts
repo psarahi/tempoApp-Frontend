@@ -3,6 +3,8 @@ export interface MiembrosModel {
   idCuenta: string;
   nombre: string;
   apellido: string;
+  usuario: string;
+  password: string;
   correo: string;
   costoHr: number;
   perfil: number;
@@ -10,15 +12,15 @@ export interface MiembrosModel {
   estado: boolean;
 }
 
-export interface Miembros {
-    _id: string;
-    idCuenta: string;
-    nombre: string;
-    apellido: string;
-    correo: string;
-    costoHr: number;
-    perfil: number;
-    expertis: string[];
-    estado: boolean;
-  }
-  
+export interface Miembro {
+  idCuenta: string;
+  nombre: string;
+  apellido: string;
+  usuario: string;
+  password: string;
+  correo: string;
+  costoHr: number;
+  perfil: number;
+  expertis: string[];
+  estado: boolean;
+}

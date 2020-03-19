@@ -9,11 +9,45 @@ import { MiembrosService } from '../../Servicios/miembros.service';
   styleUrls: ['./equipo.component.css']
 })
 export class EquipoComponent implements OnInit {
+
   validateForm: FormGroup;
+  passwordVisible = false;
   visible = false;
   listaMiembros: MiembrosModel[];
   listOfDisplayData: MiembrosModel[];
   dataMiembros;
+
+
+  // listOfControl: Array<{ id: number; controlInstance: string }> = [];
+
+  // addField(e?: MouseEvent): void {
+  //   if (e) {
+  //     e.preventDefault();
+  //   }
+  //   const id = this.listOfControl.length > 0 ? this.listOfControl[this.listOfControl.length - 1].id + 1 : 0;
+
+  //   const control = {
+  //     id,
+  //     controlInstance: `passenger${id}`
+  //   };
+  //   const index = this.listOfControl.push(control);
+  //   console.log(this.listOfControl[this.listOfControl.length - 1]);
+  //   this.validateForm.addControl(
+  //     this.listOfControl[index - 1].controlInstance,
+  //     new FormControl(null, Validators.required)
+  //   );
+  // }
+
+  // removeField(i: { id: number; controlInstance: string }, e: MouseEvent): void {
+  //   e.preventDefault();
+  //   if (this.listOfControl.length > 1) {
+  //     const index = this.listOfControl.indexOf(i);
+  //     this.listOfControl.splice(index, 1);
+  //     console.log(this.listOfControl);
+  //     this.validateForm.removeControl(i.controlInstance);
+  //   }
+  // }
+
 
   constructor(
     private serviceMiembro: MiembrosService,
@@ -21,18 +55,19 @@ export class EquipoComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-
-    this.serviceMiembro.getMiembros().subscribe(
+    // this.addField();
+    this.serviceMiembro.getMiembros().toPromise().then(
       (data: MiembrosModel[]) => {
         this.listaMiembros = data;
         this.listOfDisplayData = [...this.listaMiembros];
       }
     );
 
-
     this.validateForm = this.fb.group({
       nombre: [null, [Validators.required]],
       apellido: [null, [Validators.required]],
+      usuario: [null, [Validators.required]],
+      password: [null, [Validators.required]],
       correo: [null, [Validators.email, Validators.required]],
       costoHr: [null, [Validators.required]],
       expertis: [null, [Validators.required]],
@@ -41,18 +76,19 @@ export class EquipoComponent implements OnInit {
   }
 
   submitForm(): void {
-    debugger;
-    console.log(this.validateForm.value);
+    // debugger;
+    // console.log(this.validateForm.value);
 
     this.dataMiembros = {
       ...this.validateForm.value,
-      idCuenta: 'actual',
-      estado: true
+      idCuenta: 'actual'
     };
 
-    this.serviceMiembro.postMiembros(this.dataMiembros).subscribe(
-      (data) => {
-        console.log(data);
+    this.serviceMiembro.postMiembros(this.dataMiembros).toPromise().then(
+      (data: MiembrosModel) => {
+         console.log(data);
+        this.listOfDisplayData.push({ ...data });
+        console.log(this.listOfDisplayData);
 
       }
     );
@@ -67,26 +103,5 @@ export class EquipoComponent implements OnInit {
     this.visible = false;
   }
 
-  updateConfirmValidator(): void {
-    /** wait for refresh value */
-    Promise.resolve().then(() => this.validateForm.controls.checkPassword.updateValueAndValidity());
-  }
-
-  confirmationValidator = (control: FormControl): { [s: string]: boolean } => {
-    if (!control.value) {
-      return { required: true };
-    } else if (control.value !== this.validateForm.controls.password.value) {
-      return { confirm: true, error: true };
-    }
-    return {};
-  };
-
-  getCaptcha(e: MouseEvent): void {
-    e.preventDefault();
-  }
-
 }
-
-
-
 

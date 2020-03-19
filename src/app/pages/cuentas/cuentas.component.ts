@@ -19,7 +19,7 @@ export class CuentasComponent implements OnInit {
 
   ngOnInit() {
     // debugger;
-    this.serviceCuentas.getCuenta().subscribe(
+    this.serviceCuentas.getCuenta().toPromise().then(
       (data: CuentaModel[]) => {
         this.listaCuentas = data;
         this.listaCuentas.forEach(element => {

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ProyectosService } from '../../Servicios/proyectos.service';
 import { ProyectoModel } from 'src/app/Modelos/proyecto';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MiembrosModel } from '../../Modelos/miembros';
+import { MiembrosService } from '../../Servicios/miembros.service';
 
 @Component({
   selector: 'app-proyecto',
@@ -15,55 +17,72 @@ export class ProyectoComponent implements OnInit {
   listaProtectos: ProyectoModel[];
   listOfDisplayData: ProyectoModel[];
   dataProyectos;
-
+  dataMiembros: MiembrosModel[];
   constructor(
     private serviceProyecto: ProyectosService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private serviceMiembros: MiembrosService
   ) { }
 
   ngOnInit(): void {
-    this.serviceProyecto.getProyecto().subscribe(
+
+    this.serviceMiembros.getMiembros().toPromise().then(
+      (data: MiembrosModel[]) => {
+        this.dataMiembros = data;
+       // console.log(this.dataMiembros);
+
+      }
+    );
+
+    this.serviceProyecto.getProyecto().toPromise().then(
       (data: ProyectoModel[]) => {
         this.listaProtectos = data;
         this.listOfDisplayData = [...this.listaProtectos];
       }
     );
     this.validateForm = this.fb.group({
-      nombreProyecto: [''],
-      responsable: [''],
-      tiempoProyectadoPro: [''],
-      presuProyectadoPro: [''],
+      nombreProyecto: [null, [Validators.required]],
+      responsable: [null, [Validators.required]],
+      tiempoProyectadoPro: [null, [Validators.required]],
+      presuProyectadoPro: [null, [Validators.required]],
+      estado: [null, [Validators.required]]
     });
   }
 
   submitForm(): void {
-    //console.log(this.validateForm.get(['nombreProyecto']).value);
-    console.log(this.validateForm.value);
+    // console.log(this.validateForm.get(['estado']).value);
 
     this.dataProyectos = {
       ...this.validateForm.value,
       idCuenta: 'actual',
       tiempoRealPro: 0,
-      presupuestoRealPro: 0,
-      estado: true
+      presupuestoRealPro: 0
     };
-     this.serviceProyecto.postProyecto(this.dataProyectos).toPromise().then(
-       (data) => {
-         console.log(data);
-       }
-     );
+
+    this.serviceProyecto.postProyecto(this.dataProyectos).toPromise().then(
+      (data: ProyectoModel) => {
+        // this.listaProtectos = data;
+        // console.log(this.listaProtectos);
+
+        this.listOfDisplayData.push({ ...data });
+        console.log(this.listOfDisplayData);
+      }
+    );
     this.visible = false;
 
   }
 
   open(): void {
     this.visible = true;
-    this.validateForm = this.fb.group({
-      nombreProyecto: [''],
-      responsable: [''],
-      tiempoProyectadoPro: [''],
-      presuProyectadoPro: [''],
-    });
+
+
+    // this.validateForm = this.fb.group({
+    //   nombreProyecto: [''],
+    //   responsable: [''],
+    //   tiempoProyectadoPro: [''],
+    //   presuProyectadoPro: [''],
+    //   estado: ['']
+    // });
   }
 
   close(): void {
@@ -71,24 +90,5 @@ export class ProyectoComponent implements OnInit {
     //Este submitForm esta sospechoso
     // Solo lo puse para prbar, porque no sabia despues de que se ejevutaba
   }
-
-  updateConfirmValidator(): void {
-    /** wait for refresh value */
-    Promise.resolve().then(() => this.validateForm.controls.checkPassword.updateValueAndValidity());
-  }
-
-  confirmationValidator = (control: FormControl): { [s: string]: boolean } => {
-    if (!control.value) {
-      return { required: true };
-    } else if (control.value !== this.validateForm.controls.password.value) {
-      return { confirm: true, error: true };
-    }
-    return {};
-  };
-
-  getCaptcha(e: MouseEvent): void {
-    e.preventDefault();
-  }
-
 
 }

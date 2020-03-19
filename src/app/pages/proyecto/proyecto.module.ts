@@ -15,6 +15,7 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NzSwitchModule } from 'ng-zorro-antd/switch';
 
 const routes: Routes = [
   { path: '', component: ProyectoComponent }
@@ -37,7 +38,8 @@ const routes: Routes = [
     NzInputNumberModule,
     NzInputModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NzSwitchModule
   ],
   exports: [RouterModule],
   declarations: [ProyectoComponent],
