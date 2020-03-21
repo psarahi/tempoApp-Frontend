@@ -20,6 +20,7 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { NzMessageModule } from 'ng-zorro-antd/message';
+import { NzNotificationModule } from 'ng-zorro-antd/notification';
 
 const routes: Routes = [
   { path: '', component: ProgramacionProyectosComponent }
@@ -47,7 +48,8 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     NzSwitchModule,
-    NzMessageModule
+    NzMessageModule,
+    NzNotificationModule
 
   ],
   declarations: [ProgramacionProyectosComponent],

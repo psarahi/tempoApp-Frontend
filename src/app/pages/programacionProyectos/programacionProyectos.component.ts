@@ -5,6 +5,10 @@ import { ProgramacionProyectoModel } from 'src/app/Modelos/programacionProyecto'
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActividadesService } from '../../Servicios/actividades.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { MiembrosService } from '../../Servicios/miembros.service';
+import { ProgramacionEquipoService } from '../../Servicios/programacionEquipo.service';
+import { ProgramacionEquipoModel } from 'src/app/Modelos/programacionEquipo';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 
 @Component({
   selector: 'app-programacionProyectos',
@@ -13,16 +17,23 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 })
 export class ProgramacionProyectosComponent implements OnInit {
 
+  dataEquipoModal;
+  isVisible = false;
+  idProgramaAct;
   detalleProyecto;
   validateFormActividades: FormGroup;
+  validateFormMiembros: FormGroup;
   loadingTable = true;
   visibleActividad = false;
   visibleMiembro = false;
   nombreProyecto;
   listaActividades: [];
+  listaMiembros: [];
   listOfDisplayData: ProgramacionProyectoModel[];
   listaProgramacionProyectos: ProgramacionProyectoModel[];
   dataProgramacionProyecto;
+  dataProgramacionEquipo;
+  listaProgramacionEquipo: ProgramacionEquipoModel[];
 
 
   constructor(
@@ -31,11 +42,21 @@ export class ProgramacionProyectosComponent implements OnInit {
     private serviceActividades: ActividadesService,
     private message: NzMessageService,
     private fb: FormBuilder,
+    private serviceMiembros: MiembrosService,
+    private serviceProgramacionMiembro: ProgramacionEquipoService,
+    private notification: NzNotificationService
 
   ) {
     this.detalleProyecto = this.router.getCurrentNavigation().extras.state;
-    console.log(this.detalleProyecto);
+  }
 
+
+  createNotification(type: string, titulo: string, message: string): void {
+    this.notification.create(
+      type,
+      titulo,
+      message
+    );
   }
 
   createMessage(type: string, mensaje: string): void {
@@ -81,6 +102,39 @@ export class ProgramacionProyectosComponent implements OnInit {
 
   }
 
+  submitFormMiembro(): void {
+    // tslint:disable-next-line: forin
+    for (const i in this.validateFormActividades.controls) {
+      this.validateFormActividades.controls[i].markAsDirty();
+      this.validateFormActividades.controls[i].updateValueAndValidity();
+    }
+    this.dataProgramacionEquipo = {
+      ...this.validateFormMiembros.value,
+      idProgramacionProyecto: this.idProgramaAct
+    };
+
+    this.serviceProgramacionMiembro.postProgramacionEquipos(this.dataProgramacionEquipo)
+      .toPromise()
+      .then(
+        (data: ProgramacionEquipoModel) => {
+
+          this.listaProgramacionEquipo = [...this.listaProgramacionEquipo, data];
+
+          this.createNotification('success', 'Éxito', '¡Se agrego correctamente el equipo!');
+
+          this.idProgramaAct = '';
+          this.validateFormMiembros = this.fb.group({
+            idMiembro: [null, [Validators.required]],
+            estado: [null, [Validators.required]],
+          });
+        },
+        (error) => {
+          console.log(error);
+          this.createNotification('error', 'Error', '¡Algo salio mal');
+        }
+      );
+
+  }
   ngOnInit() {
 
     this.serviceActividades.getActividades()
@@ -88,6 +142,24 @@ export class ProgramacionProyectosComponent implements OnInit {
       .then(
         (data: []) => {
           this.listaActividades = data;
+        }
+      );
+
+    this.serviceProgramacionMiembro.getProgramacionEquipos()
+      .toPromise()
+      .then(
+        (data: ProgramacionEquipoModel[]) => {
+          this.listaProgramacionEquipo = [...data];
+          console.log(this.listaProgramacionEquipo);
+
+        }
+      );
+
+    this.serviceMiembros.getMiembros()
+      .toPromise()
+      .then(
+        (data: []) => {
+          this.listaMiembros = data;
         }
       );
 
@@ -110,6 +182,11 @@ export class ProgramacionProyectosComponent implements OnInit {
       estado: [null, [Validators.required]],
     });
 
+    this.validateFormMiembros = this.fb.group({
+      idMiembro: [null, [Validators.required]],
+      estado: [null, [Validators.required]],
+    });
+
   }
 
   openActividad(): void {
@@ -120,11 +197,28 @@ export class ProgramacionProyectosComponent implements OnInit {
     this.visibleActividad = false;
   }
 
-  openMiembro(): void {
-    this.visibleActividad = true;
+  openMiembro(idProAct): void {
+    this.idProgramaAct = idProAct;
+    this.visibleMiembro = true;
   }
 
   closeMiembro(): void {
-    this.visibleActividad = false;
+    this.visibleMiembro = false;
+  }
+
+  showModal(idProAct): void {
+
+    this.dataEquipoModal = this.listaProgramacionEquipo.filter(x => x.idProgramacionProyecto === idProAct);
+    this.isVisible = true;
+  }
+
+  handleOk(): void {
+    console.log('Button ok clicked!');
+    this.isVisible = false;
+  }
+
+  handleCancel(): void {
+    console.log('Button cancel clicked!');
+    this.isVisible = false;
   }
 }

@@ -11,8 +11,8 @@ p {
   margin: 0;
 }
 
-span{
-    font-size: large;
+span {
+  font-size: large;
 }
 
 .layout {
@@ -83,3 +83,21 @@ nz-input-number {
 /* nz-content {
  margin: 24px 16px 0;
 }  */
+
+.btn-team {
+  background-color: rgba(22, 138, 22, 0.884);
+  color: white;
+}
+
+.btn-td {
+  text-align: center;
+}
+
+nz-avatar {
+  margin-top: 16px;
+  margin-right: 16px;
+}
+
+.div-equipo {
+  margin: 0 auto;
+}
