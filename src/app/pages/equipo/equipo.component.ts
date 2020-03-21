@@ -82,7 +82,7 @@ export class EquipoComponent implements OnInit {
     this.serviceMiembro.postMiembros(this.dataMiembros).toPromise().then(
       (data: MiembrosModel) => {
 
-        this.listOfDisplayData.push({ ...data });
+        this.listOfDisplayData = [... this.listOfDisplayData, data];
         this.loadingTable = false;
         this.createMessage('success', 'Registro creado con exito');
 

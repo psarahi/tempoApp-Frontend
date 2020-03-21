@@ -46,7 +46,8 @@ export class CuentasComponent implements OnInit {
 
     this.serviceCuenta.postCuenta(this.dataCuenta).subscribe(
       (data: CuentaModel) => {
-        this.listOfDisplayData.push({ ...data });
+        this.listOfDisplayData = [... this.listOfDisplayData, data];
+
         this.loadingTable = false;
 
         this.createMessage('success', 'Registro creado con exito');

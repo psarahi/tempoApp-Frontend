@@ -31,7 +31,8 @@
 </div>
 
 <nz-drawer [nzBodyStyle]="{ height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom': '53px' }"
-  [nzMaskClosable]="false" [nzWidth]="650" [nzVisible]="visible" nzTitle="Configuración de proyectos" (nzOnClose)="close()">
+  [nzMaskClosable]="false" [nzWidth]="650" [nzVisible]="visible" nzTitle="Configuración de proyectos"
+  (nzOnClose)="close()">
   <form nz-form [nzLayout]="'vertical'" [formGroup]="validateForm" (ngSubmit)="submitForm()">
     <nz-form-item>
       <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired nzFor="nombreProyecto">Nombre</nz-form-label>
@@ -61,7 +62,8 @@
     <nz-form-item>
       <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired nzFor="presuProyectadoPro">Presupuesto proyectado</nz-form-label>
       <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="El dato es incorrecto!">
-        <nz-input-number nz-input [nzMin]="1" [nzStep]="1" formControlName="presuProyectadoPro" id="presuProyectadoPro">
+        <nz-input-number nz-input [nzMin]="1" [nzStep]="1"
+          formControlName="presuProyectadoPro" id="presuProyectadoPro">
         </nz-input-number>
       </nz-form-control>
     </nz-form-item>

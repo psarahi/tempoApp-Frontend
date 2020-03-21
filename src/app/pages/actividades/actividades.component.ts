@@ -45,7 +45,7 @@ export class ActividadesComponent implements OnInit {
 
     this.serviceActivades.postActividades(this.dataActividades).subscribe(
       (data: ActividadesModel) => {
-        this.listOfDisplayData.push({ ...data });
+        this.listOfDisplayData = [...this.listOfDisplayData, data];
         this.loadingTable = false;
 
         this.createMessage('success', 'Registro creado con exito');
