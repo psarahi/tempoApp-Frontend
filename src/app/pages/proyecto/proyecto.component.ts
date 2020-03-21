@@ -72,7 +72,8 @@ export class ProyectoComponent implements OnInit {
     this.serviceProyecto.postProyecto(this.dataProyectos).toPromise().then(
       (data: ProyectoModel) => {
 
-        this.listOfDisplayData.push({ ...data });
+        this.listOfDisplayData =  [...this.listOfDisplayData, data];
+        console.log(this.listOfDisplayData);
         this.loadingTable = false;
         this.createMessage('success', 'Registro creado con exito');
 

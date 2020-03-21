@@ -18,7 +18,8 @@ const routes: Routes = [
       { path: 'equipo', loadChildren: () => import('./pages/equipo/equipo.module').then(m => m.EquipoModule) },
       { path: 'cuentas', loadChildren: () => import('./pages/cuentas/cuentas.module').then(m => m.CuentasModule) },
       { path: 'actividades', loadChildren: () => import('./pages/actividades/actividades.module').then(m => m.ActividadesModule) },
-      
+      { path: 'programacionProyectos', loadChildren: () => import('./pages/programacionProyectos/programacionProyectos.module').then(m => m.ProgramacionProyectosModule) },
+
       // { path: 'registro', loadChildren: () => import('./pages/registro/registro.module').then(m => m.RegistroModule) }
     ]
   }
