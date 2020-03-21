@@ -6,6 +6,7 @@
     <nz-table #nzTable [nzData]="listOfDisplayData" nzFrontPagination="true" nzPageSize="5" [nzLoading]="loadingTable">
       <thead>
         <tr>
+          <th></th>
           <th>Nombre</th>
           <th>Reponsable</th>
           <th>Tiempo Proyectado (Hrs)</th>
@@ -17,6 +18,9 @@
       </thead>
       <tbody>
         <tr *ngFor="let data of nzTable.data">
+          <td>
+            <button nz-button nzType="primary" (click)="programacion(data)"><i nz-icon nzType="apartment"></i></button>
+          </td>
           <td> {{ data.nombreProyecto }} </td>
           <td> {{ data.responsable }} </td>
           <td> {{ data.tiempoProyectadoPro }} </td>
@@ -62,8 +66,7 @@
     <nz-form-item>
       <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired nzFor="presuProyectadoPro">Presupuesto proyectado</nz-form-label>
       <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="El dato es incorrecto!">
-        <nz-input-number nz-input [nzMin]="1" [nzStep]="1"
-          formControlName="presuProyectadoPro" id="presuProyectadoPro">
+        <nz-input-number nz-input [nzMin]="1" [nzStep]="1" formControlName="presuProyectadoPro" id="presuProyectadoPro">
         </nz-input-number>
       </nz-form-control>
     </nz-form-item>

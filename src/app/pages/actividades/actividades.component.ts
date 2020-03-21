@@ -43,36 +43,39 @@ export class ActividadesComponent implements OnInit {
       idCuenta: localStorage.getItem('infoUser')
     };
 
-    this.serviceActivades.postActividades(this.dataActividades).subscribe(
-      (data: ActividadesModel) => {
-        this.listOfDisplayData = [...this.listOfDisplayData, data];
-        this.loadingTable = false;
+    this.serviceActivades.postActividades(this.dataActividades)
+      .toPromise()
+      .then(
+        (data: ActividadesModel) => {
+          this.listOfDisplayData = [...this.listOfDisplayData, data];
+          this.loadingTable = false;
 
-        this.createMessage('success', 'Registro creado con exito');
+          this.createMessage('success', 'Registro creado con exito');
 
-        this.validateForm = this.fb.group({
-          nombre: [null, [Validators.required]],
-          estado: [null, [Validators.required]],
-        });
-      },
-      (error) => {
-        console.log(error);
+          this.validateForm = this.fb.group({
+            nombre: [null, [Validators.required]],
+            estado: [null, [Validators.required]],
+          });
+        },
+        (error) => {
+          console.log(error);
 
-        this.createMessage('error', 'Opps!!! Algo salio mal');
-      }
-    );
+          this.createMessage('error', 'Opps!!! Algo salio mal');
+        }
+      );
 
   }
 
   ngOnInit() {
-    this.serviceActivades.getActividades().toPromise().then(
-      (data: ActividadesModel[]) => {
-        this.listaActividades = data;
-
-        this.listOfDisplayData = [...this.listaActividades];
-        this.loadingTable = false;
-      }
-    );
+    this.serviceActivades.getActividades()
+      .toPromise()
+      .then(
+        (data: ActividadesModel[]) => {
+          this.listaActividades = data;
+          this.listOfDisplayData = [...this.listaActividades];
+          this.loadingTable = false;
+        }
+      );
 
     this.validateForm = this.fb.group({
       nombre: [null, [Validators.required]],
@@ -85,9 +88,7 @@ export class ActividadesComponent implements OnInit {
   }
 
   close(): void {
-
     this.visible = false;
-
   }
 
 }

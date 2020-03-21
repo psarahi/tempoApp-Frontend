@@ -5,6 +5,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MiembrosModel } from '../../Modelos/miembros';
 import { MiembrosService } from '../../Servicios/miembros.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { Router, NavigationExtras } from '@angular/router';
 
 @Component({
   selector: 'app-proyecto',
@@ -24,7 +25,8 @@ export class ProyectoComponent implements OnInit {
     private serviceProyecto: ProyectosService,
     private fb: FormBuilder,
     private serviceMiembros: MiembrosService,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private router: Router
 
   ) { }
 
@@ -98,21 +100,18 @@ export class ProyectoComponent implements OnInit {
 
   open(): void {
     this.visible = true;
-
-
-    // this.validateForm = this.fb.group({
-    //   nombreProyecto: [''],
-    //   responsable: [''],
-    //   tiempoProyectadoPro: [''],
-    //   presuProyectadoPro: [''],
-    //   estado: ['']
-    // });
   }
 
   close(): void {
     this.visible = false;
-    //Este submitForm esta sospechoso
-    // Solo lo puse para prbar, porque no sabia despues de que se ejevutaba
+  }
+
+  programacion(detalleProyecto: ProyectoModel) {
+    let navigationExtras: NavigationExtras = {
+      state: detalleProyecto
+    };
+    // console.log(navigationExtras);
+    this.router.navigate(['programacionProyectos'], navigationExtras);
   }
 
 }
