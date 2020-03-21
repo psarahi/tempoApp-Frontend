@@ -37,11 +37,11 @@ export class CuentasComponent implements OnInit {
       this.validateForm.controls[i].updateValueAndValidity();
     }
 
-    // debugger;
+    this.validateForm.value.password = btoa(this.validateForm.value.password);
     this.dataCuenta = {
       ...this.validateForm.value,
       fechaRegistro: moment().format('YYYY-MM-DD'),
-      perfil: 'admin',
+      perfil: '5e73eafbd981ab34a0285f42',
     };
 
     this.serviceCuenta.postCuenta(this.dataCuenta).subscribe(
@@ -50,6 +50,18 @@ export class CuentasComponent implements OnInit {
         this.loadingTable = false;
 
         this.createMessage('success', 'Registro creado con exito');
+
+        this.validateForm = this.fb.group({
+          nombre: [null, [Validators.required]],
+          apellido: [null, [Validators.required]],
+          usuario: [null, [Validators.required]],
+          correo: [null, [Validators.email, Validators.required]],
+          password: [null, [Validators.required]],
+          empresa: [null, [Validators.required]],
+          lugar: [null, [Validators.required]],
+          estado: [null, [Validators.required]],
+        });
+
       },
       (error) => {
         console.log(error);

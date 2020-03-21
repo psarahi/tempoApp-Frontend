@@ -3,6 +3,8 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MiembrosModel } from 'src/app/Modelos/miembros';
 import { MiembrosService } from '../../Servicios/miembros.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { PerfilesService } from '../../Servicios/perfiles.service';
+import { PerfilModel } from '../../Modelos/perfil';
 
 @Component({
   selector: 'app-equipo',
@@ -16,45 +18,15 @@ export class EquipoComponent implements OnInit {
   loadingTable = true;
   visible = false;
   listaMiembros: MiembrosModel[];
+  listaPerfiles: PerfilModel[];
   listOfDisplayData: MiembrosModel[];
   dataMiembros;
-
-
-  // listOfControl: Array<{ id: number; controlInstance: string }> = [];
-
-  // addField(e?: MouseEvent): void {
-  //   if (e) {
-  //     e.preventDefault();
-  //   }
-  //   const id = this.listOfControl.length > 0 ? this.listOfControl[this.listOfControl.length - 1].id + 1 : 0;
-
-  //   const control = {
-  //     id,
-  //     controlInstance: `passenger${id}`
-  //   };
-  //   const index = this.listOfControl.push(control);
-  //   console.log(this.listOfControl[this.listOfControl.length - 1]);
-  //   this.validateForm.addControl(
-  //     this.listOfControl[index - 1].controlInstance,
-  //     new FormControl(null, Validators.required)
-  //   );
-  // }
-
-  // removeField(i: { id: number; controlInstance: string }, e: MouseEvent): void {
-  //   e.preventDefault();
-  //   if (this.listOfControl.length > 1) {
-  //     const index = this.listOfControl.indexOf(i);
-  //     this.listOfControl.splice(index, 1);
-  //     console.log(this.listOfControl);
-  //     this.validateForm.removeControl(i.controlInstance);
-  //   }
-  // }
-
 
   constructor(
     private serviceMiembro: MiembrosService,
     private fb: FormBuilder,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private servicePerfiles: PerfilesService
 
   ) { }
 
@@ -63,18 +35,24 @@ export class EquipoComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.addField();
+
     this.serviceMiembro.getMiembros().toPromise().then(
       (data: MiembrosModel[]) => {
         this.listaMiembros = data;
         this.listOfDisplayData = [...this.listaMiembros];
         this.loadingTable = false;
-        // this.createMessage('success', 'Registro creado con exito');
+
       },
       (error) => {
         console.log(error);
 
         this.createMessage('error', 'Opps!!! Algo salio mal');
+      }
+    );
+
+    this.servicePerfiles.getPerfiles().toPromise().then(
+      (data: PerfilModel[]) => {
+        this.listaPerfiles = data;
       }
     );
 
@@ -85,6 +63,7 @@ export class EquipoComponent implements OnInit {
       password: [null, [Validators.required]],
       correo: [null, [Validators.email, Validators.required]],
       costoHr: [null, [Validators.required]],
+      perfil: [null, [Validators.required]],
       expertis: [null, [Validators.required]],
       estado: [null, [Validators.required]],
     });
@@ -93,19 +72,32 @@ export class EquipoComponent implements OnInit {
   submitForm(): void {
     // debugger;
     // console.log(this.validateForm.value);
-
+    this.validateForm.value.password = btoa(this.validateForm.value.password);
     this.dataMiembros = {
       ...this.validateForm.value,
-      idCuenta: 'actual'
+      idCuenta: localStorage.getItem('infoUser')
     };
 
+    console.log(this.dataMiembros);
     this.serviceMiembro.postMiembros(this.dataMiembros).toPromise().then(
       (data: MiembrosModel) => {
-        //  console.log(data);
+
         this.listOfDisplayData.push({ ...data });
-        // console.log(this.listOfDisplayData);
         this.loadingTable = false;
         this.createMessage('success', 'Registro creado con exito');
+
+        this.validateForm = this.fb.group({
+          nombre: [null, [Validators.required]],
+          apellido: [null, [Validators.required]],
+          usuario: [null, [Validators.required]],
+          password: [null, [Validators.required]],
+          correo: [null, [Validators.email, Validators.required]],
+          costoHr: [null, [Validators.required]],
+          perfil: [null, [Validators.required]],
+          expertis: [null, [Validators.required]],
+          estado: [null, [Validators.required]],
+        });
+
       },
       (error) => {
         console.log(error);

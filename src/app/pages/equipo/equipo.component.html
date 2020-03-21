@@ -58,8 +58,8 @@
       <nz-form-label [nzSm]="8" nzHasFeedback [nzXs]="24" nzFor="password" nzRequired>Contraseña</nz-form-label>
       <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="El dato es incorrecto!">
         <nz-input-group [nzSuffix]="suffixTemplate">
-          <input [type]="passwordVisible ? 'text' : 'password'" nz-input nz-input
-            id="password" formControlName="password" />
+          <input [type]="passwordVisible ? 'text' : 'password'" nz-input nz-input id="password"
+            formControlName="password" />
         </nz-input-group>
         <ng-template #suffixTemplate>
           <i nz-icon [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"
@@ -85,6 +85,16 @@
       <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="El dato es incorrecto!">
         <nz-input-number nz-input [nzMin]="1" [nzStep]="1" formControlName="costoHr" id="costoHr">
         </nz-input-number>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="8" [nzXs]="24" nzRequired nzFor="perfil">Perfil</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="El dato es incorrecto!">
+        <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Seleccione perfil" formControlName="perfil" id="perfil">
+          <nz-option *ngFor="let perfil of listaPerfiles" [nzLabel]="perfil.nombre"
+            [nzValue]="perfil._id"></nz-option>
+        </nz-select>
+        <!-- <input nz-input formControlName="responsable" id="responsable" /> -->
       </nz-form-control>
     </nz-form-item>
     <nz-form-item>

@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
+import { NzNotificationModule } from 'ng-zorro-antd/notification';
 
 import { LoginComponent } from './login/login.component';
 import { WelcomeComponent } from './pages/welcome/welcome.component';
@@ -32,6 +33,7 @@ registerLocaleData(en);
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
+    NzNotificationModule,
     HttpClientModule,
   ],
   providers: [{ provide: NZ_I18N, useValue: en_US }],

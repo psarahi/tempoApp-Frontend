@@ -61,22 +61,29 @@ export class ProyectoComponent implements OnInit {
   submitForm(): void {
     // console.log(this.validateForm.get(['estado']).value);
 
+    // localStorage.getItem('infoUser');
     this.dataProyectos = {
       ...this.validateForm.value,
-      idCuenta: 'actual',
+      idCuenta: localStorage.getItem('infoUser'),
       tiempoRealPro: 0,
       presupuestoRealPro: 0
     };
 
     this.serviceProyecto.postProyecto(this.dataProyectos).toPromise().then(
       (data: ProyectoModel) => {
-        // this.listaProtectos = data;
-        // console.log(this.listaProtectos);
 
         this.listOfDisplayData.push({ ...data });
-        // console.log(this.listOfDisplayData);
         this.loadingTable = false;
         this.createMessage('success', 'Registro creado con exito');
+
+        this.validateForm = this.fb.group({
+          nombreProyecto: [null, [Validators.required]],
+          responsable: [null, [Validators.required]],
+          tiempoProyectadoPro: [null, [Validators.required]],
+          presuProyectadoPro: [null, [Validators.required]],
+          estado: [null, [Validators.required]]
+        });
+
       },
       (error) => {
         console.log(error);

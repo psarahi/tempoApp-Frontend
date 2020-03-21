@@ -19,7 +19,9 @@
   align-items: center;
 }
 
-
+.imagen {
+  margin: 2%;
+}
 
 .texto {
   font-size: medium;

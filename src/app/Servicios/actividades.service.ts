@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 
 const apiUrl = environment.apiUrl;
+const idCuenta = localStorage.getItem('infoUser');
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,9 @@ export class ActividadesService {
   }
 
   getActividades() {
+   // return this.http.get(`${apiUrl}/actividades?filter[where][idCuenta]=${idCuenta}`);
     return this.http.get(`${apiUrl}/actividades`);
+
   }
 
 }

@@ -3,12 +3,12 @@
     [nzTrigger]="null">
     <div class="sidebar-logo">
       <a href="https://ng.ant.design/" target="_blank">
-        <img src="https://ng.ant.design/assets/img/logo.svg" alt="logo">
-        <h1>Tempo</h1>
+        <img src="assets/time.png" alt="logo">
+        <h1>TempoApp</h1>
       </a>
     </div>
     <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
-      <li nz-submenu nzOpen nzTitle="Administración" nzIcon="tool">
+      <li nz-submenu nzOpen nzTitle="Administración" nzIcon="audit">
         <ul>
           <li nz-menu-item nzMatchRouter>
             <a routerLink="/cuentas">Cuentas</a>
@@ -35,6 +35,12 @@
           </li>
         </ul>
       </li>
+      <!-- <li nz-submenu nzOpen nzTitle="Con" nzIcon="line-chart"> -->
+      <li nz-menu-item nzMatchRouter nzIcon="logout">
+        <a (click)="logout()">Cerrar sesión</a>
+      </li>
+
+      <!-- </li> -->
     </ul>
   </nz-sider>
   <nz-layout>

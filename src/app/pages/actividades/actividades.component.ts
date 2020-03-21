@@ -40,7 +40,7 @@ export class ActividadesComponent implements OnInit {
     // debugger;
     this.dataActividades = {
       ...this.validateForm.value,
-      idCuenta: 'actual'
+      idCuenta: localStorage.getItem('infoUser')
     };
 
     this.serviceActivades.postActividades(this.dataActividades).subscribe(
@@ -49,6 +49,11 @@ export class ActividadesComponent implements OnInit {
         this.loadingTable = false;
 
         this.createMessage('success', 'Registro creado con exito');
+
+        this.validateForm = this.fb.group({
+          nombre: [null, [Validators.required]],
+          estado: [null, [Validators.required]],
+        });
       },
       (error) => {
         console.log(error);
@@ -80,7 +85,9 @@ export class ActividadesComponent implements OnInit {
   }
 
   close(): void {
+
     this.visible = false;
+
   }
 
 }
