@@ -12,7 +12,7 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
   ],
-  exports: [RouterModule],
+ // exports: [RouterModule],
   declarations: [ReportComponent]
 })
 export class ReportModule { }

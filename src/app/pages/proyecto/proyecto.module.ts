@@ -43,7 +43,7 @@ const routes: Routes = [
     NzSwitchModule,
     NzMessageModule
   ],
-  exports: [RouterModule],
+ // exports: [RouterModule],
   declarations: [ProyectoComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })
